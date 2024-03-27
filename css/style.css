@@ -40,3 +40,23 @@ header a{
 .menu a{
 	margin: 0 15px;
 }
+.main{
+	margin-top: 10px;
+}
+.main > .center{
+	background-color: white;
+	width: 100%;
+	padding: 30px;
+}
+.main form{
+	text-align: center;
+	border: 1px dotted black;
+}
+.main form input,
+.main form select,
+.main form button{
+	width: 200px;
+	display: block;
+	margin: 8px auto;
+	padding: 3px 8px;
+}

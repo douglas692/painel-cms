@@ -16,6 +16,36 @@
 	</div><!--menu-->
 	<div class="clear"></div><!--clear-->
 </header>
-	<!--TODO ABRIR GIT-->
+<div class="main">
+	<div class="center">
+		<?php 
+			if(!isset($_POST['etapa_2'])){
+		?>
+		<form method="post">
+			<select name="arquivo">
+				<?php 
+					$files = glob('templates/*.html');
+					foreach ($files as $key => $value) {
+						$nomeFile = explode('/', $value);
+						$arquivo = $nomeFile[count($nomeFile)-1];
+						echo '<option value="'.$arquivo.'">'.$arquivo.'</option>';
+					}
+				?>
+			</select>
+			<input type="text" name="nome_pagina" placeholder="Nome da sua página" />
+			<button type="submit" name="etapa_2">Proxima etapa</button>		
+		</form>
+		<?php 
+			}else{
+				$nomeArquivo = $_POST['arquivo'];
+				$nomePagina = $_POST['nome_pagina'];
+				//Pegamos os dados
+		?>
+		
+		<?php 
+			}
+		?>
+	</div><!--center-->
+</div><!--main-->
 </body>
 </html>
