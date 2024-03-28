@@ -1,3 +1,6 @@
+<?php 
+	include('TemplateLeitor.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +21,20 @@
 </header>
 <div class="main">
 	<div class="center">
+		<?php 
+			if(isset($_POST['acao'])){
+				$nomeArquivo = $_POST['nome_arquivo'];
+				$nomePagina = $_POST['nome_pagina'];
+				$conteudoPagina = '';
+				foreach ($_POST as $key => $value) {
+					if($key != 'acao' && $key != 'nome_arquivo' && $key != 'nome_pagina'){
+						$conteudoPagina.=$value;
+						$conteudoPagina.="--|--";
+					}
+				}
+				echo $conteudoPagina;
+			}
+		?>
 		<?php 
 			if(!isset($_POST['etapa_2'])){
 		?>
@@ -40,8 +57,26 @@
 				$nomeArquivo = $_POST['arquivo'];
 				$nomePagina = $_POST['nome_pagina'];
 				//Pegamos os dados
+				
+				$getContents = file_get_contents('templates/'.$nomeArquivo);
+				$fields = TemplateLeitor::pegaCampos($getContents, '\{\{!(.*?)\}\}');
+				
+				
 		?>
+
+		<h2>Editando a página: <?php echo $nomePagina; ?> | Arquivo base: <?php echo $nomeArquivo; ?></h2>
 		
+		<form method="post">
+			<?php 
+				for ($i = 0; $i < count($fields['chave']); $i++){
+					echo $fields['chave'][$i].'<input type="text" name="'.$fields['campo'][$i].'" />';
+				}
+			?>
+			<input type="hidden" name="nome_pagina" value="<?php echo $nomePagina; ?>">
+			<input type="hidden" name="nome_arquivo" value="<?php echo $nomeArquivo; ?>">
+			<button type="submit" name="acao">Salvar</button>	
+		</form>
+
 		<?php 
 			}
 		?>
